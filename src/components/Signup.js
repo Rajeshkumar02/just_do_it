@@ -41,11 +41,9 @@ function Signup() {
             if(validator.isEmail(email)){
 
                 document.getElementById("err").innerHTML = "✔";
-                document.getElementById("logbtn").disabled=false;
                
             }else{
              
-                document.getElementById("logbtn").disabled=true;
                 document.getElementById("err").innerHTML = "✘";
             }
         }else{
@@ -59,11 +57,11 @@ function Signup() {
             if(username.length >=5){
             
                 document.getElementById("err1").innerHTML = "✔";
-                document.getElementById("logbtn").disabled=false;
+                
                 
             }else{
                 
-                document.getElementById("logbtn").disabled=true;
+               
                 document.getElementById("err1").innerHTML = "✘";
             }
         }else{
@@ -77,11 +75,11 @@ function Signup() {
             if(phone.length === 10){
                
                 document.getElementById("err2").innerHTML = "✔";
-                document.getElementById("logbtn").disabled=false;
+                
                 
             }else{
                
-                document.getElementById("logbtn").disabled=true;
+                
                 document.getElementById("err2").innerHTML = "✘";
             }
         }else{
@@ -118,6 +116,11 @@ function Signup() {
         }else{
             
             document.getElementById("err3").innerHTML = "";
+        }
+        if((email !== "")&&(username.length !== 0)&&(phone.length !==0)&&(password.length!==0)&&(passwordcon.length!==0)){
+            document.getElementById("logbtn").disabled=false;
+        }else{
+            document.getElementById("logbtn").disabled=true;
         }
     }
 
