@@ -24,18 +24,21 @@ import "firebase/auth";
 import 'firebase/firestore';
 import 'firebase/storage';
 
-const firebaseConfig = firebase.initializeApp({
+const firebaseConfig = {
   apiKey: "AIzaSyDeh0YjeqItSDNGYUnx8uVomjlVGdEWUXw",
   authDomain: "just-do-it-200c7.firebaseapp.com",
+  databaseURL: "https://just-do-it-200c7-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "just-do-it-200c7",
   storageBucket: "just-do-it-200c7.appspot.com",
   messagingSenderId: "508557613741",
-  appId: "1:508557613741:web:4c28602bad6898cba6c424"
-});
-var FireBase = firebaseConfig.firestore();
-
+  appId: "1:508557613741:web:4c28602bad6898cba6c424",
+  measurementId: "G-1DDE92986P"
+};
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const db = firebaseApp.firestore();
+const auth = firebaseApp.auth();
 export {
-  FireBase
+  firebaseApp,db,auth
 };
 
 export default firebaseConfig;

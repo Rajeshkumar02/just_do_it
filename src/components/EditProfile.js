@@ -12,27 +12,27 @@ function EditProfile() {
                     </div>
                     <div className="field">
                         <input id="username" name="emailAdress" type="name" placeholder="email" />
-                        <label for="username">User Name</label>
+                        <label htmlfor="username">User Name</label>
                     </div>
                     <div className="field">
                         <input id="username" name="username" type="name" placeholder="username" />
-                        <label for="username">Area of Intrest</label>
+                        <label htmlfor="username">Area of Intrest</label>
                     </div>
                     <div className="field">
                         <textarea id="username" name="username" type="name" placeholder="username" />
-                        <label for="username">About</label>
+                        <label htmlfor="username">About</label>
                     </div>
                     <div className="field">
                         <input id="username" name="username" type="name" placeholder="username" />
-                        <label for="username">Github</label>
+                        <label htmlfor="username">Github</label>
                     </div>
                     <div className="field">
                         <input id="username" name="username" type="name" placeholder="username" />
-                        <label for="username">Facebook</label>
+                        <label htmlfor="username">Facebook</label>
                     </div>
                     <div className="field">
                         <input id="username" name="username" type="name" placeholder="username" />
-                        <label for="username">Twiter</label>
+                        <label htmlfor="username">Twiter</label>
                     </div>
                     <br></br>
                 </form>

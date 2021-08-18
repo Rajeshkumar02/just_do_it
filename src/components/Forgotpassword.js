@@ -13,7 +13,7 @@ function Forgotpassword() {
                 <form className="login-form" action="./log.php" method="POST">
                     <div className="field">
                         <input id="username" type="name" name="user" placeholder="Phone number or email" />
-                        <label for="username">Email</label>
+                        <label htmlfor="username">Email</label>
                     </div>
                 </form><br /><br />
                 <div className="other">

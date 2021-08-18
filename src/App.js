@@ -34,7 +34,8 @@ class App extends Component {
             <Editprofile />
           </Route>
         </Switch>
-      </Router>);
+      </Router>
+      );
   }
 }
 

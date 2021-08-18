@@ -9,15 +9,15 @@ function Changepassword() {
                 <form className="login-form" action="./log.php" method="POST">
                     <div className="field">
                         <input id="password" name="loginPassword" type="password" placeholder="password" />
-                        <label for="password">Old Password</label>
+                        <label htmlfor="password">Old Password</label>
                     </div>
                     <div className="field">
                         <input id="password" name="loginPassword" type="password" placeholder="password" />
-                        <label for="password">New Password</label>
+                        <label htmlfor="password">New Password</label>
                     </div>
                     <div className="field">
                         <input id="password" name="loginPassword" type="password" placeholder="password" />
-                        <label for="password">Retype New Password</label>
+                        <label htmlfor="password">Retype New Password</label>
                     </div>
                 </form>
             </div>
