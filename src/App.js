@@ -6,6 +6,7 @@ import Changepassword from "./components/Changepassword";
 import Forgotpassword from "./components/Forgotpassword";
 import Editprofile from "./components/EditProfile";
 import Profile from "./components/Profile"
+import Home from "./components/Home";
 
 class App extends Component {
   render() {
@@ -32,6 +33,9 @@ class App extends Component {
           </Route>
           <Route exact path="/editprofile">
             <Editprofile />
+          </Route>
+          <Route exact path="/home">
+            <Home />
           </Route>
         </Switch>
       </Router>

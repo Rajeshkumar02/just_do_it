@@ -38,6 +38,7 @@ a {
 .error {
   color: red;
   font-size: 0.8em;
+  text-align: center;
 }
 .heading {
   margin: 22px auto 12px;
