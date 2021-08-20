@@ -1,6 +1,10 @@
 import "./css/Log.css";
 import React, { useState } from "react";
-import validator from 'validator';
+import { firebaseApp } from "../Firebase";
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+
 
 function Changepassword() {
 
@@ -8,20 +12,81 @@ function Changepassword() {
     const [newpassword, setNewpassword] = useState("");
     const [newpasswordconfirm, setNewpasswordconfirm] = useState("");
 
+    const [otick, setOtick] = useState("");
+    const [nptick, setNptick] = useState("");
+    const [npctick, setNpctick] = useState("");
+
+    const [error, setError] = useState([]);
+
+
+
+    const ReAuthenticate = (props) => {
+        var user = firebaseApp.auth().currentUser;
+        const email = user.email;
+        var cred = firebase.auth.EmailAuthProvider.credential(email, props);
+        return user.reauthenticateWithCredential(cred);
+      }
+
+
+
     const handleSubmit = (e) => {
- 
+        e.preventDefault();
+        console.log("logged")
+        ReAuthenticate(oldpassword).then(() => {
+            var user = firebaseApp.auth().currentUser;
+            user.updatePassword(newpassword).then(() => {
+              alert("Password Updated");
+            }).catch((err) => {
+              alert(err.message);
+              setError(err.message);
+            })
+          }).catch(() => {
+            alert("Something Went Wrong");
+          });
+          
+    }
+
+    function oldpasscheck() {
+        if (oldpassword !== "") {
+            if (oldpassword.length >= 5) {
+                setOtick("✔");
+            } else {
+                setOtick("✘");
+            }
+        } else {
+            setOtick("");
+        }
     }
 
     function inputcheck() {
-        if (oldpassword >=5 ) {
-            if ((newpassword == newpasswordconfirm) && newpassword >=5 && newpasswordconfirm >=5 && (oldpassword!=newpassword)) {
-                document.getElementById("logbtn").disabled = false;
+        if (newpassword.length !== 0) {
+            if (newpassword.length >= 6) {
+
+                setNptick("✔");
+                if (newpasswordconfirm.length !== 0) {
+                    if (newpassword === newpasswordconfirm && newpassword !== oldpassword) {
+                        setNpctick("✔");
+                    } else {
+                        setNpctick("✘");
+                        setNptick("✘");
+                    }
+                } else {
+                    setNpctick("");
+                }
+
             } else {
-                document.getElementById("logbtn").disabled = true;
+                setNptick("✘");
             }
+        } else {
+
+            setNptick("");
+        }
+        if ((oldpassword !== "" && newpassword.length !== 0 && newpasswordconfirm === newpassword )) {
+            document.getElementById("logbtn").disabled = false;
         } else {
             document.getElementById("logbtn").disabled = true;
         }
+
     }
 
     return (
@@ -31,21 +96,26 @@ function Changepassword() {
                 <br /><br />
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="field">
-                        <input id="password" name="loginPassword" type="password" placeholder="password" onKeyUp={inputcheck} onChange={(e)=>setOldpassword(e.target.value)} />
-                        <label htmlfor="password">Old Password</label>
+                        <input id="password" name="loginPassword" type="password" placeholder="password" onKeyUp={oldpasscheck} onChange={(e) => setOldpassword(e.target.value)} />
+                        <label htmlFor="password">Old Password</label>
+                        <h5 className="img" >{otick}</h5>
                     </div>
                     <div className="field">
-                        <input id="password" name="loginPassword" type="password" placeholder="password" onKeyUp={inputcheck} onChange={(e)=>setNewpassword(e.target.value)} />
-                        <label htmlfor="password">New Password</label>
+                        <input id="password" name="loginPassword" type="password" placeholder="password" onKeyUp={inputcheck} onChange={(e) => setNewpassword(e.target.value)} />
+                        <label htmlFor="password">New Password</label>
+                        <h5 className="img" >{nptick}</h5>
                     </div>
                     <div className="field">
-                        <input id="password" name="loginPassword" type="password" placeholder="password" onKeyUp={inputcheck} onChange={(e)=>setNewpasswordconfirm(e.target.value)} />
-                        <label htmlfor="password">Retype New Password</label>
+                        <input id="password" name="loginPassword" type="password" placeholder="password" onKeyUp={inputcheck} onChange={(e) => setNewpasswordconfirm(e.target.value)} />
+                        <label htmlFor="password">Retype New Password</label>
+                        <h5 className="img" >{npctick}</h5>
                     </div>
-                </form><br></br>
+                    <h5 className="error">{error}</h5>
                 <center>
                     <button className="login-button" id="logbtn" name="login" title="login" disabled >Change</button>
                 </center>
+                </form><br></br>
+
             </div>
         </div>
     );

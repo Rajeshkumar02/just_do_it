@@ -1,26 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import validator from 'validator';
-import { auth } from "../Firebase";
-import { Redirect} from "react-router-dom";
+import { firebaseApp } from "../Firebase";
+import { Redirect } from "react-router-dom";
+import { AuthContext } from "./Auth";
 
 
 
 
 function Login() {
 
+    const [now,setNow] = useState("");
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        auth.signInWithEmailAndPassword(emailcheck, passwordcheck)
+        firebaseApp.auth().signInWithEmailAndPassword(emailcheck, passwordcheck)
             .then(user => {
                 console.log(user)
-                alert("Login Successfully !")
-                return <Redirect to="/home" />;
+                if(user.user.emailVerified){
+                    setNow(true);
+                    console.log("Login Successfully !")
+                }else{
+                    setNow(false);
+                    setError("Your emai is not verified. Please do verified.")
+                }
+                
             })
             .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorCode);
+                console.log(error.message);
                 setError("Check your email id and password");
             });
 
@@ -29,16 +36,42 @@ function Login() {
     const [emailcheck, setEmailcheck] = useState("");
     const [passwordcheck, setPasswordcheck] = useState("");
     const [error, setError] = useState([]);
+    const [etick, setEtick] = useState("");
+    const [ptick, setPtick] = useState("");
 
     function inputcheck() {
-        if (emailcheck.length >= 2 && validator.isEmail(emailcheck)) {
-            if (passwordcheck.length >= 5) {
-                document.getElementById("logbtn").disabled = false;
+        if (emailcheck !== "") {
+            if (validator.isEmail(emailcheck)) {
+                setEtick("✔");
+                if (passwordcheck.length !== 0) {
+                    if (passwordcheck.length >= 6) {
+                        setPtick("✔");
+                    } else {
+                        setPtick("✘");
+                    }
+                } else {
+
+                    setPtick("");
+                }
+
             } else {
-                document.getElementById("logbtn").disabled = true;
+                setEtick("✘");
             }
         } else {
+            setEtick("");
+        }
+        if (emailcheck.length !== 0 && passwordcheck.length !== 0) {
+            document.getElementById("logbtn").disabled = false;
+        } else {
             document.getElementById("logbtn").disabled = true;
+        }
+    }
+
+    const { currentUser } = useContext(AuthContext);
+    if (currentUser) {
+        if(now){
+            console.log(currentUser)
+            return <Redirect to="/home" />;
         }
     }
 
@@ -51,12 +84,12 @@ function Login() {
                     <div className="field">
                         <input id="username" type="name" name="user" placeholder="Email" onKeyUp={inputcheck} onChange={(e) => setEmailcheck(e.target.value)} />
                         <label htmlFor="username">Email</label>
-                        <h5 className="img" id="err"></h5>
+                        <h5 className="img" >{etick}</h5>
                     </div>
                     <div className="field">
                         <input id="password" name="loginPassword" type="password" placeholder="password" onKeyUp={inputcheck} onChange={(e) => setPasswordcheck(e.target.value)} />
                         <label htmlFor="password">Password</label>
-                        <h5 className="img" id="err1"></h5>
+                        <h5 className="img">{ptick}</h5>
                     </div>
                     <h5 className="error">{error}</h5>
                     <button className="login-button" id="logbtn" name="login" title="login" disabled>Log In</button>

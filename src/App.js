@@ -7,10 +7,11 @@ import Forgotpassword from "./components/Forgotpassword";
 import Editprofile from "./components/EditProfile";
 import Profile from "./components/Profile"
 import Home from "./components/Home";
+import { AuthProvider } from "./components/Auth";
 
 class App extends Component {
   render() {
-    return (
+    return (<AuthProvider>
       <Router>
         <Switch>
           <Route exact path="/">
@@ -39,7 +40,7 @@ class App extends Component {
           </Route>
         </Switch>
       </Router>
-      );
+    </AuthProvider>);
   }
 }
 

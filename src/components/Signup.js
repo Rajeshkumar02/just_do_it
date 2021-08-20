@@ -1,14 +1,11 @@
 import "./css/Log.css";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { auth } from "../Firebase";
+import React, { useState, useContext } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { firebaseApp } from "../Firebase";
 import validator from 'validator';
+import { AuthContext } from "./Auth";
 
 function Signup() {
-
-    const [log, setLog] = useState([]);
-    const [loading, setLoading] = useState(false);
-
 
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
@@ -16,23 +13,51 @@ function Signup() {
     const [password, setPassword] = useState("");
     const [passwordcon, setpasswordcon] = useState("");
     const [error, setError] = useState([]);
+    const { currentUser } = useContext(AuthContext);
+    const [now, setNow] = useState(true);
+    const [userExists, alreadyUserExists] = useState(null);
+    const [redirect, setRedirect] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        auth.createUserWithEmailAndPassword(email, password)
+        firebaseApp.auth().createUserWithEmailAndPassword(email, password)
             .then(user => {
                 console.log(user)
+                setNow(false);
                 alert("User added Successfully")
+                firebaseApp.firestore().collection(user.user.uid).doc("profile").set({ Email: email, password: password, Username: username, PhoneNumber: phone }).then(() => {
+                    firebaseApp.auth().signOut();
+                    user.user.sendEmailVerification().then(() => {
+                        alert("Verification Email is send");
+                        setRedirect(true)
+                    }).catch((err) => {
+                        setError("Try after some time");
+                        alert(err.message)
+                    })
+                }).catch((err) => {
+                    setError(err.message);
+                })
             }).catch(err => {
                 console.log(err)
-                setError(err.message);
+                alert("User already existes")
+                alreadyUserExists(true)
             });
     }
 
-
-    if (loading) {
-        return <h1>Loading.....</h1>;
+    if (redirect) {
+        return <Redirect to="/Login" />;
     }
+
+    if (currentUser) {
+        if (now) {
+            return <Redirect to="/login" />;
+        }
+    }
+    
+    if (userExists) {
+        return <Redirect to="/Login" />;
+    }
+
 
 
     function emailchecker() {
@@ -98,9 +123,9 @@ function Signup() {
                         document.getElementById("err4").innerHTML = "✔";
 
                         document.getElementById("logbtn").disabled = false;
-
+                    
                     } else {
-
+                      
                         document.getElementById("logbtn").disabled = true;
                         document.getElementById("err4").innerHTML = "✘";
                     }
@@ -117,7 +142,7 @@ function Signup() {
 
             document.getElementById("err3").innerHTML = "";
         }
-        if ((email !== "") && (username.length !== 0) && (phone.length !== 0) && (password.length !== 0) && (passwordcon.length !== 0)) {
+        if ((email !== "") && (username.length !== 0) && (password.length!==0)&&(password===passwordcon)) {
             document.getElementById("logbtn").disabled = false;
         } else {
             document.getElementById("logbtn").disabled = true;
