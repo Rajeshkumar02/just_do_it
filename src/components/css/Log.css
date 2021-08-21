@@ -42,10 +42,9 @@ a {
 }
 .heading {
   margin: 22px auto 12px;
-
-  background-position: -98px 0;
+  background-image: url("https://see.fontimg.com/api/renderfont4/MVZpx/eyJyIjoiZnMiLCJoIjo1MSwidyI6MTY1MCwiZnMiOjMxLCJmZ2MiOiIjMDAwMDAwIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/SnVzdCBpdA/maghrib.png");
   height: 51px;
-  width: 177px;
+  width: 147px;
   overflow: hidden;
 }
 
