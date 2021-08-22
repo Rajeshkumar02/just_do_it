@@ -1,16 +1,24 @@
 import "./css/Profile.css";
-import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { auth } from "../Firebase";
+import React, { useContext } from "react";
+import { Redirect,Link } from "react-router-dom";
+import { firebaseApp } from "../Firebase";
+import { AuthContext } from "./Auth";
+
 
 function Home() {
 
     const handleSubmit = (e) => {
-        auth.signOut().then(() => {
+        firebaseApp.auth().signOut().then(() => {
             alert("hello");
         }).catch((error) => {
             console.log(error.message);
         });
+    }
+
+    const { currentUser } = useContext(AuthContext);
+    if (!currentUser) {
+        console.log(currentUser)
+        return <Redirect to="/" />;
     }
 
     return (

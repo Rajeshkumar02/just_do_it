@@ -2,13 +2,31 @@ import React from 'react';
 import "./css/Profile.css";
 import {Link } from "react-router-dom";
 import { SocialIcon } from 'react-social-icons';
+import { AuthContext } from "./Auth";
+import { useContext, useState,useEffect } from "react";
+import { firebaseApp } from "../Firebase";
 
 function Card() {
+
+  const { currentUser } = useContext(AuthContext);
+  const [error, setError] = useState([]);
+  const [imgURL,setImgURL] = useState("");
+  var getOptions = {
+    source: 'AvatarURL'
+  };
+  useEffect(() => {
+    firebaseApp.firestore().collection(currentUser.uid).doc("profile").get(getOptions).then((doc) => {
+      setImgURL( doc.data().AvatarURL);
+    }).catch((err) => {
+      setError(err.message);
+    });
+  }, [])
   return (
     <div className="body1">
+       <h5 className="error">{error}</h5>
       <div className="card-container">
       <Link to="/editprofile"><span className="pro">✎ Edit</span></Link>
-        <img className="round" src="https://randomuser.me/api/portraits/women/79.jpg" alt="user" />
+        <img className="round" src={imgURL} alt="user" />
         <h3>Ricky Park</h3>
         <h6>New York</h6>
         <p>User interface designer and <br /> front-end developer</p>
