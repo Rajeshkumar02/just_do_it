@@ -11,16 +11,14 @@ function Card() {
   const { currentUser } = useContext(AuthContext);
   const [error, setError] = useState([]);
   const [imgURL,setImgURL] = useState("");
-  var getOptions = {
-    source: 'AvatarURL'
-  };
+
   useEffect(() => {
-    firebaseApp.firestore().collection(currentUser.uid).doc("profile").get(getOptions).then((doc) => {
+    firebaseApp.firestore().collection(currentUser.uid).doc("profile").get().then((doc) => {
       setImgURL( doc.data().AvatarURL);
     }).catch((err) => {
       setError(err.message);
     });
-  }, [])
+  }, [currentUser.uid])
   return (
     <div className="body1">
        <h5 className="error">{error}</h5>

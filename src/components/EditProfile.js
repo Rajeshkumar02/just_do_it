@@ -14,7 +14,7 @@ function EditProfile() {
         e.preventDefault();
         const ref = firebaseApp.storage().ref();
    
-    ref.child("images/" +currentUser.uid+"-"+"avatar").put(image)
+    ref.child("images/" +currentUser.uid).put(image)
         .then(snapshot => snapshot.ref.getDownloadURL())
         .then((url) => {
             console.log(url);
