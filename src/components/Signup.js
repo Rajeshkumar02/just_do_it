@@ -25,7 +25,7 @@ function Signup() {
                 console.log(user)
                 setNow(false);
                 alert("User added Successfully")
-                firebaseApp.firestore().collection(user.user.uid).doc("profile").set({ Email: email, password: password, Username: username, PhoneNumber: phone }).then(() => {
+                firebaseApp.firestore().collection(user.user.uid).doc("profile").set({ Email: email, password: password, Username: username, PhoneNumber: phone}).then(() => {
                     firebaseApp.auth().signOut();
                     user.user.sendEmailVerification().then(() => {
                         alert("Verification Email is send");

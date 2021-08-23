@@ -11,10 +11,22 @@ function Card() {
   const { currentUser } = useContext(AuthContext);
   const [error, setError] = useState([]);
   const [imgURL,setImgURL] = useState("");
+  const [name,setName] = useState("");
+  const [about,setAbout] = useState("");
+  const [aoi,setAoi] = useState("");
+  const [twitter,setTwitter] = useState("");
+  const [facebook,setFacebook] = useState("");
+  const [github,setGithub] = useState("");
 
   useEffect(() => {
     firebaseApp.firestore().collection(currentUser.uid).doc("profile").get().then((doc) => {
       setImgURL( doc.data().AvatarURL);
+      setName(doc.data().Username);
+      setAbout(doc.data().About);
+      setAoi(doc.data().AreaofInterest);
+      setTwitter(doc.data().Twitter);
+      setFacebook(doc.data().Facebook);
+      setGithub(doc.data().Github);
     }).catch((err) => {
       setError(err.message);
     });
@@ -25,13 +37,13 @@ function Card() {
       <div className="card-container">
       <Link to="/editprofile"><span className="pro">✎ Edit</span></Link>
         <img className="round" src={imgURL} alt="user" />
-        <h3>Ricky Park</h3>
+        <h3>{name}</h3>
         <h6>New York</h6>
-        <p>User interface designer and <br /> front-end developer</p>
-        <p><SocialIcon url="https://github.com/Ramya4447" />&nbsp;&nbsp;<SocialIcon url="https://github.com/Ramya4447" />&nbsp;&nbsp;<SocialIcon url="https://github.com/Ramya4447" /></p>
+        <p>{aoi}</p>
+        <p><SocialIcon url={github} />&nbsp;&nbsp;<SocialIcon url={facebook} />&nbsp;&nbsp;<SocialIcon url={twitter} /></p>
         <div className="About">
           <h6>About</h6>
-          <p>Hello Everyone Im Hena I love working on the front-end designing and Im also expert in it.</p>
+          <p>{about}</p>
         </div>
       </div>
     </div>
