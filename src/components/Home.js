@@ -4,6 +4,7 @@ import { Redirect,Link } from "react-router-dom";
 import { firebaseApp } from "../Firebase";
 import { AuthContext } from "./Auth";
 import { confirm } from "react-confirm-box";
+import Suggestionlist from "./Suggestionlist"
 
 
 function Home() {
@@ -67,6 +68,7 @@ function Home() {
                     </Link>
                 </div>
             </div>
+            <Suggestionlist />
         </div >
     );
 }
