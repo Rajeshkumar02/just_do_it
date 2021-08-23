@@ -3,16 +3,28 @@ import React, { useContext } from "react";
 import { Redirect,Link } from "react-router-dom";
 import { firebaseApp } from "../Firebase";
 import { AuthContext } from "./Auth";
+import { confirm } from "react-confirm-box";
 
 
 function Home() {
+    const options = {
+        labels: {
+          confirmable: "Confirm",
+          cancellable: "Cancel"
+        }
+      }
 
-    const handleSubmit = (e) => {
-        firebaseApp.auth().signOut().then(() => {
-            alert("hello");
-        }).catch((error) => {
-            console.log(error.message);
-        });
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const result = await confirm("Are you sure?", options);
+            if (result) {
+                firebaseApp.auth().signOut().then(() => {
+                    
+                }).catch((error) => {
+                    console.log(error.message);
+                });
+                return;
+            }
     }
 
     const { currentUser } = useContext(AuthContext);
@@ -50,7 +62,7 @@ function Home() {
                     <Link to="/profile" className="navigation-link">
                         <i className="far fa-user-circle" />
                     </Link>
-                    <Link to="/" onClick={handleSubmit} id="signout" className="navigation-link" >
+                    <Link to="/home" onClick={handleSubmit} id="signout" className="navigation-link" >
                         <i className="fas fa-sign-out-alt" />
                     </Link>
                 </div>
