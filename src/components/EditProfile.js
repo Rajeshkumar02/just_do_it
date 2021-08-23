@@ -36,6 +36,10 @@ function EditProfile() {
                     }).catch((err) => {
                         setError(err.message);
                     })
+                    firebaseApp.firestore().collection("suggestions").doc(currentUser.uid).set({AvatarURL:url},{merge:true}).then(() => {
+                    }).catch((err) => {
+                        setError(err.message);
+                    })
                 })
             .catch(console.error);
         }
@@ -45,7 +49,10 @@ function EditProfile() {
             }).catch((err) => {
                 setError(err.message);
             })
-
+            firebaseApp.firestore().collection("suggestions").doc(currentUser.uid).set({Username:name},{merge:true}).then(() => {
+            }).catch((err) => {
+                setError(err.message);
+            })
         }
         if(place){
             firestore.set({Place:place},{merge:true}).then(() => {
@@ -58,6 +65,10 @@ function EditProfile() {
         if(aoi){
             firestore.set({AreaofInterest:aoi},{merge:true}).then(() => {
                 alert("aoi updated");
+            }).catch((err) => {
+                setError(err.message);
+            })
+            firebaseApp.firestore().collection("suggestions").doc(currentUser.uid).set({AreaofInterest:aoi},{merge:true}).then(() => {
             }).catch((err) => {
                 setError(err.message);
             })
