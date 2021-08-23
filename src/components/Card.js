@@ -12,6 +12,7 @@ function Card() {
   const [error, setError] = useState([]);
   const [imgURL,setImgURL] = useState("");
   const [name,setName] = useState("");
+  const [place,setPlace] = useState("");
   const [about,setAbout] = useState("");
   const [aoi,setAoi] = useState("");
   const [twitter,setTwitter] = useState("");
@@ -22,6 +23,7 @@ function Card() {
     firebaseApp.firestore().collection(currentUser.uid).doc("profile").get().then((doc) => {
       setImgURL( doc.data().AvatarURL);
       setName(doc.data().Username);
+      setPlace(doc.data().Place);
       setAbout(doc.data().About);
       setAoi(doc.data().AreaofInterest);
       setTwitter(doc.data().Twitter);
@@ -38,7 +40,7 @@ function Card() {
       <Link to="/editprofile"><span className="pro">✎ Edit</span></Link>
         <img className="round" src={imgURL} alt="user" />
         <h3>{name}</h3>
-        <h6>New York</h6>
+        <h6>{place}</h6>
         <p>{aoi}</p>
         <p><SocialIcon url={github} />&nbsp;&nbsp;<SocialIcon url={facebook} />&nbsp;&nbsp;<SocialIcon url={twitter} /></p>
         <div className="About">

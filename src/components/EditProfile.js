@@ -10,6 +10,7 @@ function EditProfile() {
     const [image,setImage] = useState();
     const { currentUser } = useContext(AuthContext);
     const [name,setName] = useState("");
+    const [place,setPlace] = useState("");
     const [aoi,setAoi] = useState("");
     const [about,setAbout] = useState("");
     const [github,setGithub] = useState("");
@@ -41,6 +42,14 @@ function EditProfile() {
         if(name){
             firestore.set({Username:name},{merge:true}).then(() => {
                 alert("username changed");
+            }).catch((err) => {
+                setError(err.message);
+            })
+
+        }
+        if(place){
+            firestore.set({Place:place},{merge:true}).then(() => {
+                alert("place changed");
             }).catch((err) => {
                 setError(err.message);
             })
@@ -105,6 +114,10 @@ function EditProfile() {
                     <div className="field">
                         <input id="username" name="emailAdress" type="name" placeholder="email" onChange={(e)=>setName(e.target.value)}/>
                         <label htmlfor="username">User Name</label>
+                    </div>
+                    <div className="field">
+                        <input id="username" name="emailAdress" type="name" placeholder="email" onChange={(e)=>setPlace(e.target.value)}/>
+                        <label htmlfor="username">Place</label>
                     </div>
                     <div className="field">
                         <input id="username" name="username" type="name" placeholder="username" onChange={(e)=>setAoi(e.target.value)}/>
