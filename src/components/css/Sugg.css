@@ -2,20 +2,24 @@
   display: flex;
   align-items: center;
   height: 500px;
-  margin: 0 30px;
+  margin: 10px 30px;
 }
 
 .profile-card {
   flex: 1 1 30%;
-  max-width: 300px;
+  max-width: 190px;
+  min-width: 190px;
+  max-height: 300px;
+  min-height: 300px;
   background: #fff;
-  padding: 20px 60px;
+  padding: 20px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 4px;
   box-shadow: 0 0 2px 0 #ccc;
   transition: 0.3s;
+  margin: 10px;
 }
 
 .profile-card:hover {
@@ -65,11 +69,16 @@
   .profile-name {
     font-size: 18px;
   }
+  .profile-card {
+    padding: 20px 15px;
+    margin: 15px;
+  }
 }
 
 @media screen and (max-width: 800px) {
   .profile-card {
     padding: 20px 15px;
+    margin: 10px;
   }
   .profile-name {
     font-size: 16px;

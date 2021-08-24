@@ -37,7 +37,7 @@ const Frame = ({imgurl,displayname,name,aoi}) => {
             <div className="profile-name">{displayname}</div>
             <div className="display-name">@{name}</div>
             <div className="profile-position">{aoi}</div>
-            <a href="" className="button">View Profile</a>
+            <div className="button">View Profile</div>
         </div>
     );
   }

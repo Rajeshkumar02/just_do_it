@@ -44,7 +44,7 @@ function EditProfile() {
             .catch(console.error);
         }
         if(name){
-            firestore.set({Username:name},{merge:true}).then(() => {
+            firestore.set({Displayname:name},{merge:true}).then(() => {
                 alert("username changed");
             }).catch((err) => {
                 setError(err.message);
