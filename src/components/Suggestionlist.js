@@ -22,7 +22,7 @@ function Suggestionlist() {
     },[]);
 
     return (
-        <div className="body1">
+        <div className="body2">
             <div className="profile-container">
                 {info.map((data)=>(<Frame imgurl = {data.AvatarURL} name = {data.Username} displayname={data.Displayname} aoi = {data.AreaofInterest} />))}
             </div>
