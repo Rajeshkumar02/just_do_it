@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     height: 500px;
-    margin: 10px 30px;
+    padding-top: 10px;
 }
 
 .body2 {
