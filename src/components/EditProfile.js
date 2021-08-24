@@ -49,7 +49,7 @@ function EditProfile() {
             }).catch((err) => {
                 setError(err.message);
             })
-            firebaseApp.firestore().collection("suggestions").doc(currentUser.uid).set({Displayname:name},{merge:true}).then(() => {
+            firebaseApp.firestore().collection("suggestions").doc(currentUser.uid).set({Displayname:name,Username:currentUser.username},{merge:true}).then(() => {
             }).catch((err) => {
                 setError(err.message);
             })

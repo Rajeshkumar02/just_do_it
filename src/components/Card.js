@@ -35,6 +35,7 @@ function Card() {
       setError(err.message);
     });
   }, [currentUser.uid])
+  console.log(imgURL)
   return (
     <div className="body1">
        <h5 className="error">{error}</h5>
