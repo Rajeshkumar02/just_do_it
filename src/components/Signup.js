@@ -28,10 +28,15 @@ function Signup() {
                 setNow(false);
                 alert("User added Successfully")
                 firebaseApp.firestore().collection(user.user.uid).doc("profile").set({ Email: email, password: password, Displayname: displayname, PhoneNumber: phone,Username:username}).then(() => {
-                    firebaseApp.auth().signOut();
+                    
                     user.user.sendEmailVerification().then(() => {
                         alert("Verification Email is send");
-                        setRedirect(true)
+                        firebaseApp.firestore().collection("suggestions").doc(user.user.uid).set({Displayname:displayname,Username:username},{merge:true}).then(() => {
+                            setRedirect(true);    
+                            firebaseApp.auth().signOut();
+                        }).catch((err) => {
+                                setError(err.message);
+                            })
                     }).catch((err) => {
                         setError("Try after some time");
                         alert(err.message)
