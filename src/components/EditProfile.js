@@ -49,7 +49,7 @@ function EditProfile() {
             }).catch((err) => {
                 setError(err.message);
             })
-            firebaseApp.firestore().collection("suggestions").doc(currentUser.uid).set({Username:name},{merge:true}).then(() => {
+            firebaseApp.firestore().collection("suggestions").doc(currentUser.uid).set({Displayname:name},{merge:true}).then(() => {
             }).catch((err) => {
                 setError(err.message);
             })
@@ -124,7 +124,7 @@ function EditProfile() {
                     </div>
                     <div className="field">
                         <input id="username" name="emailAdress" type="name" placeholder="email" onChange={(e)=>setName(e.target.value)}/>
-                        <label htmlfor="username">User Name</label>
+                        <label htmlfor="username">Display Name</label>
                     </div>
                     <div className="field">
                         <input id="username" name="emailAdress" type="name" placeholder="email" onChange={(e)=>setPlace(e.target.value)}/>

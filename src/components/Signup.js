@@ -8,6 +8,7 @@ import { AuthContext } from "./Auth";
 function Signup() {
 
     const [email, setEmail] = useState("");
+    const [displayname, setDisplayname] = useState("");
     const [username, setUsername] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
@@ -25,7 +26,7 @@ function Signup() {
                 console.log(user)
                 setNow(false);
                 alert("User added Successfully")
-                firebaseApp.firestore().collection(user.user.uid).doc("profile").set({ Email: email, password: password, Username: username, PhoneNumber: phone}).then(() => {
+                firebaseApp.firestore().collection(user.user.uid).doc("profile").set({ Email: email, password: password, Displayname: displayname, PhoneNumber: phone,Username:username}).then(() => {
                     firebaseApp.auth().signOut();
                     user.user.sendEmailVerification().then(() => {
                         alert("Verification Email is send");
@@ -64,7 +65,9 @@ function Signup() {
         if (email !== "") {
 
             if (validator.isEmail(email)) {
-
+                var name   = email.substring(0, email.lastIndexOf("@"));
+                setUsername(name);
+                console.log(name);
                 document.getElementById("err").innerHTML = "✔";
 
             } else {
@@ -78,8 +81,8 @@ function Signup() {
     }
 
     function namechecker() {
-        if (username.length !== 0) {
-            if (username.length >= 5) {
+        if (displayname.length !== 0) {
+            if (displayname.length >= 5) {
 
                 document.getElementById("err1").innerHTML = "✔";
 
@@ -142,7 +145,7 @@ function Signup() {
 
             document.getElementById("err3").innerHTML = "";
         }
-        if ((email !== "") && (username.length !== 0) && (password.length!==0)&&(password===passwordcon)) {
+        if ((email !== "") && (displayname.length !== 0) && (password.length!==0)&&(password===passwordcon)) {
             document.getElementById("logbtn").disabled = false;
         } else {
             document.getElementById("logbtn").disabled = true;
@@ -161,8 +164,8 @@ function Signup() {
                         <h5 className="img" id="err"></h5>
                     </div>
                     <div className="field">
-                        <input id="username" name="username" type="name" placeholder="Username" onKeyUp={namechecker} onChange={(e) => setUsername(e.target.value)} />
-                        <label htmlFor="username">Username</label>
+                        <input id="username" name="username" type="name" placeholder="Username" onKeyUp={namechecker} onChange={(e) => setDisplayname(e.target.value)} />
+                        <label htmlFor="username">Displayname</label>
                         <h5 className="img" id="err1"></h5>
                     </div>
                     <div className="field">
