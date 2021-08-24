@@ -1,6 +1,6 @@
 import "./css/Profile.css";
 import React, { useContext } from "react";
-import { Redirect,Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { firebaseApp } from "../Firebase";
 import { AuthContext } from "./Auth";
 import { confirm } from "react-confirm-box";
@@ -10,22 +10,22 @@ import Suggestionlist from "./Suggestionlist";
 function Home() {
     const options = {
         labels: {
-          confirmable: "Confirm",
-          cancellable: "Cancel"
+            confirmable: "Confirm",
+            cancellable: "Cancel"
         }
-      }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const result = await confirm("Are you sure?", options);
-            if (result) {
-                firebaseApp.auth().signOut().then(() => {
-                    
-                }).catch((error) => {
-                    console.log(error.message);
-                });
-                return;
-            }
+        if (result) {
+            firebaseApp.auth().signOut().then(() => {
+
+            }).catch((error) => {
+                console.log(error.message);
+            });
+            return;
+        }
     }
 
     const { currentUser } = useContext(AuthContext);
@@ -68,7 +68,9 @@ function Home() {
                     </Link>
                 </div>
             </div>
+            Suggestion's
             <Suggestionlist />
+            <hr></hr>
         </div >
     );
 }
