@@ -22,7 +22,7 @@ function Login() {
                     console.log("Login Successfully !")
                 }else{
                     setNow(false);
-                    setError("Your emai is not verified. Please do verify.")
+                    setError("Your emails is not verified. Please do verify.")
                 }
                 
             })
